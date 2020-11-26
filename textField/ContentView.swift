@@ -15,14 +15,14 @@ struct ContentView: View {
     @State var title = ""
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+//            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             VStack {
-                Text("Custom TextFieldStyle()")
+                Text("Custom View Modifier")
                     .font(.title)
                     .foregroundColor(.black)
                     .fontWeight(.bold)
                 HStack {
-                    TextField("Search...", text: $text).textFieldStyle(CustomTextFieldStyle())
+                    TextField("Search...", text: $text).modifier(customViewModifier())
                 }
             }
         }
@@ -33,18 +33,23 @@ struct CustomTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.white, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(20)
             .shadow(color: .gray, radius: 10)
             .padding()
     }
 }
 
-struct tl : ViewModifier {
+struct customViewModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
+            .padding()
+            .overlay(RoundedRectangle(cornerRadius: 30)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2))
+            
             .font(.custom("Open Sans", size: 18))
             .foregroundColor(Color.green)
+            .padding()
     }
 }
 
