@@ -20,11 +20,7 @@ struct ContentView: View {
                 Text("Custom View Modifier")
                     .font(.title)
                     .fontWeight(.bold)
-                HStack {
-                    
-                    TextField("Search...", text: $text)
-                    Image(systemName: "magnifyingglass").foregroundColor(.red)
-                }
+               
             }
         }
     }
@@ -78,15 +74,45 @@ extension TextField {
     }
 }
 
+
+
+//VStack {
+//    HStack {
+//        TextField("example@gmail.com", text: $text)
+//        Image(systemName: "person.fill").font(.title2)
+//    }.underlineTextField()
+//    HStack {
+//        TextField("password", text: $text)
+//        Image(systemName: "key.fill").font(.title2)
+//    }.underlineTextField()
+//}.padding()
+
+extension Color {
+    static let darkPink = Color(red: 208 / 255, green: 45 / 255, blue: 208 / 255)
+}
+
 extension View {
     func underlineTextField() -> some View {
         self
-           .foregroundColor(Color.white)
-           .padding(.leading, 16)
-           .padding(.trailing, 16)
+            .padding(.vertical, 10)
+            .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+            .foregroundColor(.darkPink)
+            .padding(10)
     }
 }
 
+struct UnderlineTextFieldView: View {
+    var textField: TextField<Self>
+     var imageName: String
+
+     var body: some View {
+          HStack {
+            Image(systemName: "magnifyingglass")
+                textField
+                    
+               }
+          }
+     }
 
 
 
