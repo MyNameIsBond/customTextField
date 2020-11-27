@@ -19,10 +19,11 @@ struct ContentView: View {
             VStack {
                 Text("Custom View Modifier")
                     .font(.title)
-                    .foregroundColor(.black)
                     .fontWeight(.bold)
                 HStack {
-                    TextField("Search...", text: $text).modifier(customViewModifier())
+                    
+                    TextField("Search...", text: $text)
+                    Image(systemName: "magnifyingglass").foregroundColor(.red)
                 }
             }
         }
@@ -40,18 +41,54 @@ struct CustomTextFieldStyle: TextFieldStyle {
     }
 }
 
-struct customViewModifier : ViewModifier {
+
+
+
+
+struct customViewModifier: ViewModifier {
+    var roundedCornes: CGFloat
+    var startColor: Color
+    var endColor: Color
+    var textColor: Color
+    
     func body(content: Content) -> some View {
         content
             .padding()
-            .overlay(RoundedRectangle(cornerRadius: 30)
-                        .stroke(LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2))
-            
+            .background(LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .cornerRadius(roundedCornes)
+            .padding(3)
+            .foregroundColor(textColor)
+            .overlay(RoundedRectangle(cornerRadius: roundedCornes)
+                        .stroke(LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.5))
             .font(.custom("Open Sans", size: 18))
-            .foregroundColor(Color.green)
             .padding()
+            .shadow(radius: 10)
     }
 }
+
+extension TextField {
+    
+    func extensionTextFieldView(roundedCornes: CGFloat, startColor: Color,  endColor: Color) -> some View {
+        self
+            .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .cornerRadius(roundedCornes)
+            .padding()
+            .shadow(color: .purple, radius: 10)
+    }
+}
+
+extension View {
+    func underlineTextField() -> some View {
+        self
+           .foregroundColor(Color.white)
+           .padding(.leading, 16)
+           .padding(.trailing, 16)
+    }
+}
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
