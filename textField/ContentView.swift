@@ -15,9 +15,9 @@ struct ContentView: View {
     @State var title = ""
     var body: some View {
         ZStack {
-//            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-//            Color.white.ignoresSafeArea()
-            Color.background.ignoresSafeArea()
+            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            Color.white.ignoresSafeArea()
+//            Color.background.ignoresSafeArea()
             
 //            VStack(alignment: .leading) {
 //                Text("Custom Struct")
@@ -28,13 +28,10 @@ struct ContentView: View {
 //            }.padding(30)
             
             HStack {
-                NeumorphicStyleTextField(textField: TextField("Search...", text: $text), imageName: "magnifyingglass")
-            }.padding()
-            
-            
-           
-            
-            
+                Image(systemName: "magnifyingglass")
+                TextField("Search...", text: $text)
+                
+            }.padding().underlineTextField()
         }
     }
 }
