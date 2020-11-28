@@ -3,7 +3,6 @@
 // DefaultTextFieldStyle
 // PlainTextFieldStyle
 // RoundedBorderTextFieldStyle
-
 // only for macOS
 // SquareBorderTextFieldStyle
 
@@ -11,17 +10,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @State var text = ""
     @State var title = ""
     var body: some View {
         ZStack {
 //            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-            VStack {
-                Text("Custom View Modifier")
-                    .font(.title)
-                    .fontWeight(.bold)
-               
-            }
+//            Color.white.ignoresSafeArea()
+            Color.background.ignoresSafeArea()
+            
+//            VStack(alignment: .leading) {
+//                Text("Custom Struct")
+//                    .font(.title)
+//                    .fontWeight(.bold)
+//                    .foregroundColor(.neumorphictextColor)
+//                NeumorphicStyleTextField(textField: TextField("Search...", text: $text), imageName: "magnifyingglass")
+//            }.padding(30)
+            
+            HStack {
+                NeumorphicStyleTextField(textField: TextField("Search...", text: $text), imageName: "magnifyingglass")
+            }.padding()
+            
+            
+           
+            
+            
         }
     }
 }
@@ -30,16 +43,15 @@ struct CustomTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(LinearGradient(gradient: Gradient(colors: [Color.white, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(20)
             .shadow(color: .gray, radius: 10)
             .padding()
     }
 }
 
-
-
-
+// Custom ViewModifier
+// use .modifier(.customViewModifier(:attributes:))
 
 struct customViewModifier: ViewModifier {
     var roundedCornes: CGFloat
@@ -62,6 +74,9 @@ struct customViewModifier: ViewModifier {
     }
 }
 
+// Custom TextField modifier
+// usage TextField.extensionTextFieldView(:attributes:)
+
 extension TextField {
     
     func extensionTextFieldView(roundedCornes: CGFloat, startColor: Color,  endColor: Color) -> some View {
@@ -74,7 +89,7 @@ extension TextField {
     }
 }
 
-
+// Custom View modifier
 
 //VStack {
 //    HStack {
@@ -101,18 +116,36 @@ extension View {
     }
 }
 
-struct UnderlineTextFieldView: View {
-    var textField: TextField<Self>
-     var imageName: String
 
-     var body: some View {
-          HStack {
-            Image(systemName: "magnifyingglass")
-                textField
-                    
-               }
-          }
-     }
+
+
+// Neumorphic TextField Style
+
+extension Color {
+    static let lightShadow = Color(red: 255 / 255, green: 255 / 255, blue: 255 / 255)
+    static let darkShadow = Color(red: 163 / 255, green: 177 / 255, blue: 198 / 255)
+    static let background = Color(red: 224 / 255, green: 229 / 255, blue: 236 / 255)
+    static let neumorphictextColor = Color(red: 132 / 255, green: 132 / 255, blue: 132 / 255)
+}
+
+struct NeumorphicStyleTextField: View {
+    var textField: TextField<Text>
+    var imageName: String
+    var body: some View {
+        HStack {
+            Image(systemName: imageName)
+                .foregroundColor(.darkShadow)
+            textField
+            }
+            .padding()
+            .foregroundColor(.neumorphictextColor)
+            .background(Color.background)
+            .cornerRadius(6)
+            .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
+            .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
+            
+        }
+}
 
 
 
