@@ -1,55 +1,40 @@
-
-
 // DefaultTextFieldStyle
 // PlainTextFieldStyle
 // RoundedBorderTextFieldStyle
 // only for macOS
 // SquareBorderTextFieldStyle
 
-
 import SwiftUI
 
 struct ContentView: View {
     
     @State var text = ""
-    @State var title = ""
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             Color.white.ignoresSafeArea()
-//            Color.background.ignoresSafeArea()
-            
-//            VStack(alignment: .leading) {
-//                Text("Custom Struct")
-//                    .font(.title)
-//                    .fontWeight(.bold)
-//                    .foregroundColor(.neumorphictextColor)
-//                NeumorphicStyleTextField(textField: TextField("Search...", text: $text), imageName: "magnifyingglass")
-//            }.padding(30)
-            
-            HStack {
-                Image(systemName: "magnifyingglass")
-                TextField("Search...", text: $text)
-                
-            }.padding().underlineTextField()
+            VStack(alignment: .leading) {
+                Text("Underlined TextField Style").font(.title2)
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField("Search", text: $text)
+                }.underlineTextField()
+            }.padding()
         }
     }
 }
 
-struct CustomTextFieldStyle: TextFieldStyle {
+struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.white, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(20)
             .shadow(color: .gray, radius: 10)
-            .padding()
     }
 }
 
 // Custom ViewModifier
 // use .modifier(.customViewModifier(:attributes:))
-
 struct customViewModifier: ViewModifier {
     var roundedCornes: CGFloat
     var startColor: Color
@@ -66,14 +51,13 @@ struct customViewModifier: ViewModifier {
             .overlay(RoundedRectangle(cornerRadius: roundedCornes)
                         .stroke(LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.5))
             .font(.custom("Open Sans", size: 18))
-            .padding()
+            
             .shadow(radius: 10)
     }
 }
 
 // Custom TextField modifier
 // usage TextField.extensionTextFieldView(:attributes:)
-
 extension TextField {
     
     func extensionTextFieldView(roundedCornes: CGFloat, startColor: Color,  endColor: Color) -> some View {
@@ -81,23 +65,9 @@ extension TextField {
             .padding()
             .background(LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(roundedCornes)
-            .padding()
             .shadow(color: .purple, radius: 10)
     }
 }
-
-// Custom View modifier
-
-//VStack {
-//    HStack {
-//        TextField("example@gmail.com", text: $text)
-//        Image(systemName: "person.fill").font(.title2)
-//    }.underlineTextField()
-//    HStack {
-//        TextField("password", text: $text)
-//        Image(systemName: "key.fill").font(.title2)
-//    }.underlineTextField()
-//}.padding()
 
 extension Color {
     static let darkPink = Color(red: 208 / 255, green: 45 / 255, blue: 208 / 255)
@@ -109,7 +79,6 @@ extension View {
             .padding(.vertical, 10)
             .overlay(Rectangle().frame(height: 2).padding(.top, 35))
             .foregroundColor(.darkPink)
-            .padding(10)
     }
 }
 
@@ -140,11 +109,8 @@ struct NeumorphicStyleTextField: View {
             .cornerRadius(6)
             .shadow(color: Color.darkShadow, radius: 3, x: 2, y: 2)
             .shadow(color: Color.lightShadow, radius: 3, x: -2, y: -2)
-            
         }
 }
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
